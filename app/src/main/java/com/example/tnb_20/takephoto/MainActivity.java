@@ -22,11 +22,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(!dir.exists()){
+            dir.mkdir();
+        }
         ImageView img = findViewById(R.id.image);
-        File image = new File(dir, dir.listFiles()[dir.listFiles().length-1].getName());
-        if (image.exists()){
-            Uri uri = Uri.fromFile(image);
-            img.setImageURI(uri);
+        if(dir.listFiles().length>0) {
+            File image = new File(dir, dir.listFiles()[dir.listFiles().length - 1].getName());
+            if (image.exists()) {
+                Uri uri = Uri.fromFile(image);
+                img.setImageURI(uri);
+            }
         }
 
         Button b = findViewById(R.id.button);
@@ -49,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ImageView iv = findViewById(R.id.image);
             iv.setImageBitmap(imageBitmap);
-
-            if(!dir.exists()){
-                dir.mkdir();
-            }
 
             OutputStream os = null;
             try {
